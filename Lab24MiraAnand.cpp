@@ -165,13 +165,13 @@ void add_goat(set<Goat> &trip, string names [], string colors [])
     string color = colors[rand() % SZ_COLORS]; // random selection of a color within the "colors" array and assigning it to "color"
     int age = rand() % (MAX_AGE + 1); // random assignment of a age between 0 - 20 (MAX_AGE) and assigning it to "name"
 
-    trip.insert(Goat(name, age, color)); // .insert() function call, inserts a new Goat object within the set with all 3 parameters
-
     // since std::set automatically checks for & eliminates duplicates within the set, we should notify the user if a duplicate was encountered & therefore not added
     // we will check if the set size has changed. If the set size changes, this means that the object was NOT a duplicate and it was added
     // it is important to inform the user and keep them updated
     int sizeBeforeInsertion = trip.size(); // using .size() member function, to keep a track of the current set size before insertion
 
+    trip.insert(Goat(name, age, color)); // .insert() function call, inserts a new Goat object within the set with all 3 parameters
+    
     if (trip.size() > sizeBeforeInsertion)
     {
         cout << "This goat was successfully added to the end of the list: " << name << " (";
@@ -212,6 +212,8 @@ void delete_goat(set<Goat> &trip)
 
 // Task 3 & Task 4 - void display_trip(set<Goat> trip) function header
 // DESCRIPTION: this function neatly outputs the contents of the set
+// - the contents of the set will be displayed in sorted order (alphabetically by name) since std::set automatically sorts the objects
+// - the contents of the set will be sorted alphabetically by name because we defined this in our header file
 // - the function notfies the user if the set is currently empty. This means they will have to add goats if they wish to see output
 // ARGUMENTS: set<Goat> trip, which is a set of Goat objects
 // RETURNS: nothing, void function
