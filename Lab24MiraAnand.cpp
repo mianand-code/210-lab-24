@@ -2,12 +2,14 @@
 // Module 9, Lesson: std::list & std::set, Assignment: GM3K2
 // IDE used: Visual Studio Code for Mac
 
+// std::set will ensure that objects are automatically ordered/sorted and unique (no duplicates)
+
 #include <cstdlib> // needed to generate a random number
 #include <ctime> // needed to generate a random number
 #include <fstream> // needed for file operations
 #include "Goat.h" // references the Goat header file, which contains a complete class for Goat objects
 #include <iostream>
-#include <list> // needed to use std::list
+#include <set> // needed to use std::set
 #include <string>
 using namespace std;
 
@@ -17,11 +19,12 @@ const int SZ_COLORS = 25; // represents array size for colors, array can hold 25
 const int MAX_AGE = 20; // represents the maximum age to be assigned to a Goat object, will be used to generate a random # for age
 
 // function prototypes
+// change function prototypes from list to set
 int main_menu();
-int select_goat(list<Goat> trip);
-void add_goat(list<Goat> &trip, string [], string []);
-void delete_goat(list<Goat> &trip);
-void display_trip(list<Goat> trip);
+int select_goat(set<Goat> trip);
+void add_goat(set<Goat> &trip, string [], string []);
+void delete_goat(set<Goat> &trip);
+void display_trip(set<Goat> trip);
 
 int main() 
 {
@@ -29,7 +32,7 @@ int main()
 
     bool again = true; // set bool flag to true until user wants to quit program
 
-    list<Goat> trip; // creation of an std::list to hold Goat objects
+    set<Goat> trip; // creation of an std::set to hold Goat objects
 
     // code block to read & populate arrays for names
     ifstream fin("names.txt");
@@ -54,15 +57,15 @@ int main()
         switch (userChoice)
         {
             case 1:
-                add_goat(trip, names, colors); // add_goat() function call, will add a Goat object (with its 3 parameters) to the container/std::list
+                add_goat(trip, names, colors); // add_goat() function call, will add a Goat object (with its 3 parameters) to the container/std::set
                 break;
 
             case 2:
-                delete_goat(trip); // delete_goat() function call, will delete a Goat object from the container/std::list (if the list is not empty)
+                delete_goat(trip); // delete_goat() function call, will delete a Goat object from the container/std::set (if the set is not empty)
                 break;
 
             case 3:
-                display_trip(trip); // display_trip() function call, will display the current list of Goat objects
+                display_trip(trip); // display_trip() function call, will display the current set of Goat objects
                 break;
             
             case 4:
@@ -108,25 +111,25 @@ int main_menu()
     return userChoice; // return int userChoice to main()
 }
 
-// Task 3 - int select_goat(list<Goat> trip) function header
-// DESCRIPTION: this function will output the contents of the list, prompt the user to select a Goat object (#) they would like to delete from the list, and then return this choice
-// - the function ensures that the list is not empty before proceeding with selection, for purposes of completeness (even though delete_goat() will handle this also)
-// - the user's choice is also validated to ensure they do not select a # that is not within the range of the list size
+// Task 3 - int select_goat(set<Goat> trip) function header
+// DESCRIPTION: this function will output the contents of the set, prompt the user to select a Goat object (#) they would like to delete from the set, and then return this choice
+// - the function ensures that the set is not empty before proceeding with selection, for purposes of completeness (even though delete_goat() will handle this also)
+// - the user's choice is also validated to ensure they do not select a # that is not within the range of the set size
 // this function works hand-in-hand with the delete_goat() function, because delete_goat() requires SELECTION of a specific goat
-// ARGUMENTS: list<Goat> trip, which is a list of Goat objects
+// ARGUMENTS: set<Goat> trip, which is a set of Goat objects
 // RETURNS: int userChoice, which is the user input for the Goat object # they would like to delete
-int select_goat(list<Goat> trip)
+int select_goat(set<Goat> trip)
 {
-    if (trip.empty()) // using .empty() member function, to check if the list is empty before proceeding
+    if (trip.empty()) // using .empty() member function, to check if the set is empty before proceeding
     {
-        cout << "The list is currently empty. No goat can be selected." << endl << endl;
+        cout << "The set is currently empty. No goat can be selected." << endl << endl;
         return -1; // return an error state
     }
 
     cout << endl;
     cout << "Goat Selection Menu:" << endl;
-    int goatNum = 1; // to keep track of the # of goats in the list
-    for (auto goats : trip) // using a C++ 11 range loop and "auto" keyword to output contents of the list
+    int goatNum = 1; // to keep track of the # of goats in the set
+    for (auto goats : trip) // using a C++ 11 range loop and "auto" keyword to output contents of the set
     {
         // calling all getters to output names, ages, and colors for each Goat object
         cout << "[" << goatNum++ << "] " << goats.get_name() << " (";
@@ -139,16 +142,16 @@ int select_goat(list<Goat> trip)
         cout << "Enter the number of the goat you would like to delete: ";
         cin >> userChoice;
 
-        if (userChoice > 0 && userChoice <= trip.size()) // using .size() member function, to ensure that the user does not enter a number that is less/greater than the size of the list
+        if (userChoice > 0 && userChoice <= trip.size()) // using .size() member function, to ensure that the user does not enter a number that is less/greater than the size of the set
         {
             return userChoice; // return int userChoice
         }
         else
-            cout << "ERROR: Choice must be greater than 0 and cannot exceed size of list. Please try again." << endl;
+            cout << "ERROR: Choice must be greater than 0 and cannot exceed size of set. Please try again." << endl;
     }
 }
 
-// Task 3 - void add_goat(list<Goat> &trip, string names [], string colors []) function header
+// Task 3 - void add_goat(set<Goat> &trip, string names [], string colors []) function header
 // DESCRIPTION: this function adds a new Goat object to the end of the list. Name, age, and color are all randomly selected and assigned to the Goat object
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
