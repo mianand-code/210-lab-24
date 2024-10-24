@@ -173,20 +173,27 @@ void add_goat(set<Goat> &trip, string names [], string colors [])
     int sizeBeforeInsertion = trip.size(); // using .size() member function, to keep a track of the current set size before insertion
 
     if (trip.size() > sizeBeforeInsertion)
+    {
+        cout << "This goat was successfully added to the end of the list: " << name << " (";
+        cout << age << ", " << color << ")" << endl;
+        cout << "Select menu option #3 to see the updated/current trip." << endl << endl;
+    }
+    else
+        cout << "The goat was not added because it is not unique/is a duplicate." << endl;
 }
 
-// Task 3 - void delete_goat(list<Goat> &trip) function header
-// DESCRIPTION: this function deletes a user-chosen Goat object within the list
-// - the function ensures that the list is not empty before proceeding with deletion
+// Task 3 - void delete_goat(set<Goat> &trip) function header
+// DESCRIPTION: this function deletes a user-chosen Goat object within the set
+// - the function ensures that the set is not empty before proceeding with deletion
 // this function works hand-in-hand with the select_goat() function 
-// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
-// - passing by reference because the list will be modified and this modification will also reflect in main()
+// ARGUMENTS: set<Goat> &trip, which is a set of Goat objects
+// - passing by reference because the set will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
-void delete_goat(list<Goat> &trip)
+void delete_goat(set<Goat> &trip)
 {
-    if (trip.empty()) // using .empty() member function, to check if the list is empty before proceeding
+    if (trip.empty()) // using .empty() member function, to check if the set is empty before proceeding
     {
-        cout << "The list is currently empty. No goat can be deleted." << endl << endl;
+        cout << "The set is currently empty. No goat can be deleted." << endl << endl;
         return; // exit function
     }
 
@@ -203,23 +210,23 @@ void delete_goat(list<Goat> &trip)
     cout << "The goat has been successfully deleted. Select menu option #3 to see the updated/current trip." << endl << endl;
 }
 
-// Task 3 & Task 4 - void display_trip(list<Goat> trip) function header
-// DESCRIPTION: this function neatly outputs the contents of the list
-// - the function notfies the user if the list is currently empty. This means they will have to add goats if they wish to see output
-// ARGUMENTS: list<Goat> trip, which is a list of Goat objects
+// Task 3 & Task 4 - void display_trip(set<Goat> trip) function header
+// DESCRIPTION: this function neatly outputs the contents of the set
+// - the function notfies the user if the set is currently empty. This means they will have to add goats if they wish to see output
+// ARGUMENTS: set<Goat> trip, which is a set of Goat objects
 // RETURNS: nothing, void function
-void display_trip(list<Goat> trip)
+void display_trip(set<Goat> trip)
 {
-    if (trip.empty()) // using .empty() member function, to check if the list is empty before proceeding
+    if (trip.empty()) // using .empty() member function, to check if the set is empty before proceeding
     {
-        cout << "The list is currently empty. No goats to display." << endl << endl;
+        cout << "The set is currently empty. No goats to display." << endl << endl;
         return; // exit function
     }
 
     cout << endl;
     cout << "Here is the current trip:" << endl;
-    int goatNum = 1; // to keep track of the # of goats in the list
-    for (auto goats : trip) // using a C++ 11 range loop and "auto" keyword to output contents of the list
+    int goatNum = 1; // to keep track of the # of goats in the set
+    for (auto goats : trip) // using a C++ 11 range loop and "auto" keyword to output contents of the set
     {
         // calling all getters to output names, ages, and colors for each Goat object
         cout << "[" << goatNum++ << "] " << goats.get_name() << " (";
