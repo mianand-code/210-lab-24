@@ -75,6 +75,7 @@ public:
     // write overloaded < operator for the std::set
     // this is needed so we can decide how we want Goat objects to be sorted (since std::set will sort automatically)
     // in this case - we want to sort alphabetically, by name
+    // this also determines if a Goat object is a duplicate - if a goat has the same name as another goat, they will be considered a duplicate and not be added to the set
     bool operator< (const Goat &other) const
     {
         return name < other.name; // we compare one Goat object with another one ("other") in order to sort by name

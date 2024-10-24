@@ -154,8 +154,10 @@ int select_goat(set<Goat> trip)
 // Task 3 - void add_goat(set<Goat> &trip, string names [], string colors []) function header
 // DESCRIPTION: this function inserts a new Goat object within the set. Name, age, and color are all randomly selected and assigned to the Goat object
 // - since std::set automatically eliminates duplicates, the Goat object will not be inserted if it is already part of the set. The user will be notified if there is a duplicate
+// - duplicates are determined by name, which is defined in our header file. If a goat has the same name as another goat, it will not be added to the set
+// - since the array size is large (200 names), checking for uniqueness solely by name is a good option
 // ARGUMENTS: set<Goat> &trip, which is a set of Goat objects
-// - passing by reference because the list will be modified and this modification will also reflect in main()
+// - passing by reference because the set will be modified and this modification will also reflect in main()
 // - string names [], which is an array of names. A name will be randomly selected from this array
 // - string colors [], which is an array of colors. A color will be randomly selected from this array
 // RETURNS: nothing, void function
@@ -166,7 +168,7 @@ void add_goat(set<Goat> &trip, string names [], string colors [])
     int age = rand() % (MAX_AGE + 1); // random assignment of a age between 0 - 20 (MAX_AGE) and assigning it to "name"
 
     // since std::set automatically checks for & eliminates duplicates within the set, we should notify the user if a duplicate was encountered & therefore not added
-    // we will check if the set size has changed. If the set size changes, this means that the object was NOT a duplicate and it was added
+    // we will check if the set size has changed after insertion. If the set size changes, this means that the object was NOT a duplicate and it was added
     // it is important to inform the user and keep them updated
     int sizeBeforeInsertion = trip.size(); // using .size() member function, to keep a track of the current set size before insertion
 
@@ -174,18 +176,22 @@ void add_goat(set<Goat> &trip, string names [], string colors [])
     
     if (trip.size() > sizeBeforeInsertion)
     {
-        cout << "This goat was successfully added to the end of the list: " << name << " (";
+        cout << "This goat was successfully inserted within the set: " << name << " (";
         cout << age << ", " << color << ")" << endl;
         cout << "Select menu option #3 to see the updated/current trip." << endl << endl;
     }
     else
-        cout << "The goat was not added because it is not unique/is a duplicate." << endl;
+    {
+        cout << "The goat was not added because the name is not unique/is a duplicate." << endl;
+        cout << "This is the goat that was not added: " << name << " (";
+        cout << age << ", " << color << ")" << endl << endl;
+    }
 }
 
 // Task 3 - void delete_goat(set<Goat> &trip) function header
 // DESCRIPTION: this function deletes a user-chosen Goat object within the set
 // - the function ensures that the set is not empty before proceeding with deletion
-// this function works hand-in-hand with the select_goat() function 
+// - this function works hand-in-hand with the select_goat() function 
 // ARGUMENTS: set<Goat> &trip, which is a set of Goat objects
 // - passing by reference because the set will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
@@ -199,7 +205,7 @@ void delete_goat(set<Goat> &trip)
 
     int goatNum = select_goat(trip); // select_goat() function call, assigns user's choice of which Goat object (#) to delete to goatNum
     // creation of an iterator using the C++ 11 "auto" keyword, since we cannot access objects by index
-    auto it = trip.begin(); // using .begin() member function to start at the beginning of the list
+    auto it = trip.begin(); // using .begin() member function to start at the beginning of the set
     for (int i = 1; i < goatNum; i++) // using a for loop to advance the iterator to the position of the Goat object we want to delete
     {
         it++;
