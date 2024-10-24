@@ -152,23 +152,27 @@ int select_goat(set<Goat> trip)
 }
 
 // Task 3 - void add_goat(set<Goat> &trip, string names [], string colors []) function header
-// DESCRIPTION: this function adds a new Goat object to the end of the list. Name, age, and color are all randomly selected and assigned to the Goat object
-// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
+// DESCRIPTION: this function inserts a new Goat object within the set. Name, age, and color are all randomly selected and assigned to the Goat object
+// - since std::set automatically eliminates duplicates, the Goat object will not be inserted if it is already part of the set. The user will be notified if there is a duplicate
+// ARGUMENTS: set<Goat> &trip, which is a set of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // - string names [], which is an array of names. A name will be randomly selected from this array
 // - string colors [], which is an array of colors. A color will be randomly selected from this array
 // RETURNS: nothing, void function
-void add_goat(list<Goat> &trip, string names [], string colors [])
+void add_goat(set<Goat> &trip, string names [], string colors [])
 {
     string name = names[rand() % SZ_NAMES]; // random selection of a name within the "names" array and assigning it to "name"
     string color = colors[rand() % SZ_COLORS]; // random selection of a color within the "colors" array and assigning it to "color"
     int age = rand() % (MAX_AGE + 1); // random assignment of a age between 0 - 20 (MAX_AGE) and assigning it to "name"
 
-    trip.push_back(Goat(name, age, color)); // push_back() function call, adds Goat objects to the end of the list with all 3 parameters
+    trip.insert(Goat(name, age, color)); // .insert() function call, inserts a new Goat object within the set with all 3 parameters
 
-    cout << "This goat was successfully added to the end of the list: " << name << " (";
-    cout << age << ", " << color << ")" << endl;
-    cout << "Select menu option #3 to see the updated/current trip." << endl << endl;
+    // since std::set automatically checks for & eliminates duplicates within the set, we should notify the user if a duplicate was encountered & therefore not added
+    // we will check if the set size has changed. If the set size changes, this means that the object was NOT a duplicate and it was added
+    // it is important to inform the user and keep them updated
+    int sizeBeforeInsertion = trip.size(); // using .size() member function, to keep a track of the current set size before insertion
+
+    if (trip.size() > sizeBeforeInsertion)
 }
 
 // Task 3 - void delete_goat(list<Goat> &trip) function header
